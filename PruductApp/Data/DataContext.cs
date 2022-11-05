@@ -14,6 +14,16 @@ namespace PruductApp.Data
         {
         }
         public DbSet<ProductEntity> Products { get; set; }
+        public DbSet<OrderEntity> Orders { get; set; }
+        public DbSet<CustomerEntity> Customers { get; set; }
+
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<OrderEntity>()
+        //                .HasMany(x => x.Products)
+        //                .WithOne(t => t.Customers)
+        //                .UsingEntity(j => j.ToTable("Orders"));
+        //}
     }
 }
  

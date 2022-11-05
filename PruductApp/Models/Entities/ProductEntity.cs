@@ -10,6 +10,7 @@ namespace PruductApp.Models.Entities
     public class ProductEntity
     {
         public int Id { get; set; }
+        [Column(TypeName = "nvarchar(200)")]
         public string Name { get; set; } = null!;
         [Column(TypeName = "money")]
         public decimal Price { get; set; }

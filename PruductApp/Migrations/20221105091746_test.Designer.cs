@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PruductApp.Data;
 
@@ -11,9 +12,10 @@ using PruductApp.Data;
 namespace PruductApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221105091746_test")]
+    partial class test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,12 +36,9 @@ namespace PruductApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Customers", (string)null);
+                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("PruductApp.Models.Entities.OrderEntity", b =>
@@ -50,9 +49,6 @@ namespace PruductApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
 
@@ -61,9 +57,7 @@ namespace PruductApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
-
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("PruductApp.Models.Entities.ProductEntity", b =>
@@ -88,18 +82,7 @@ namespace PruductApp.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("Products", (string)null);
-                });
-
-            modelBuilder.Entity("PruductApp.Models.Entities.OrderEntity", b =>
-                {
-                    b.HasOne("PruductApp.Models.Entities.CustomerEntity", "Customer")
-                        .WithMany("Order")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("PruductApp.Models.Entities.ProductEntity", b =>
@@ -110,11 +93,6 @@ namespace PruductApp.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Order");
-                });
-
-            modelBuilder.Entity("PruductApp.Models.Entities.CustomerEntity", b =>
-                {
                     b.Navigation("Order");
                 });
 

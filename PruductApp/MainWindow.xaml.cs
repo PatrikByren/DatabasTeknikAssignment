@@ -21,11 +21,11 @@ namespace PruductApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly ProductService _productService;
-        public MainWindow(ProductService productService)
+        //private readonly ProductService _productService;
+        public MainWindow(/*ProductService productService*/)
         {
             InitializeComponent();
-            _productService = productService;
+            //_productService = productService;
         }
     }
 }
