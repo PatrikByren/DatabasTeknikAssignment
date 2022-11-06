@@ -11,10 +11,10 @@ namespace PruductApp.Models.Entities
     {
         public int Id { get; set; } 
         public DateTime DateTime { get; set; } = DateTime.Now;
-        //public int CustomerId { get; set; }
+        public int CustomerId { get; set; }
         public int ProductId { get; set; }
         public ICollection<ProductEntity> Product { get; set; } = null!;//Kopplad till flera produkter
-        //public CustomerEntity Customer { get; set; } = null!;
+        public CustomerEntity Customer { get; set; } = null!;
 
 
     }

@@ -9,9 +9,6 @@ namespace PruductApp.Models
 {
     internal class OrderRequest
     {
-        public int ProductId { get; set; }
-        public ICollection<ProductEntity> Products { get; set; } //Kopplad till flera produkter
-        public int CustomerId { get; set; }
-        public CustomerEntity Customer { get; set; } = null!;
+        public DateTime DateTime { get; set; } = DateTime.Now;
     }
 }

@@ -27,7 +27,7 @@ namespace PruductApp.Services
             });
             await _context.SaveChangesAsync();
         }
-        public async Task<List<ProductEntity>> GettAllProductAsync()
+        public async Task<List<ProductEntity>> GetAllProductAsync()
         {
             return await _context.Products.ToListAsync();
         }
