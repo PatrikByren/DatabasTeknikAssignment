@@ -31,7 +31,7 @@ namespace PruductApp.Services
         {
             return await _context.Products.ToListAsync();
         }
-        public async Task<ProductEntity> GetProductAsync(int id) 
+        public async Task<ProductEntity> GetOneProductAsync(int id) 
         {
             try
             {
