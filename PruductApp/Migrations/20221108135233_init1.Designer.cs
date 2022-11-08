@@ -12,8 +12,8 @@ using PruductApp.Data;
 namespace PruductApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221105084727_initi")]
-    partial class initi
+    [Migration("20221108135233_init1")]
+    partial class init1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,21 @@ namespace PruductApp.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("OrderEntityProductEntity", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderEntityProductEntity");
+                });
 
             modelBuilder.Entity("PruductApp.Models.Entities.CustomerEntity", b =>
                 {
@@ -35,6 +50,9 @@ namespace PruductApp.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -85,15 +103,28 @@ namespace PruductApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId");
-
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("OrderEntityProductEntity", b =>
+                {
+                    b.HasOne("PruductApp.Models.Entities.OrderEntity", null)
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PruductApp.Models.Entities.ProductEntity", null)
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PruductApp.Models.Entities.OrderEntity", b =>
                 {
                     b.HasOne("PruductApp.Models.Entities.CustomerEntity", "Customer")
-                        .WithMany()
+                        .WithMany("Order")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -101,20 +132,9 @@ namespace PruductApp.Migrations
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("PruductApp.Models.Entities.ProductEntity", b =>
+            modelBuilder.Entity("PruductApp.Models.Entities.CustomerEntity", b =>
                 {
-                    b.HasOne("PruductApp.Models.Entities.OrderEntity", "Order")
-                        .WithMany("Products")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Order");
-                });
-
-            modelBuilder.Entity("PruductApp.Models.Entities.OrderEntity", b =>
-                {
-                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

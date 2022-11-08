@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace PruductApp.Models
 {
-    public class OrderRequest
+    public class CustomerModel
     {
-        public DateTime DateTime { get; set; } = DateTime.Now;
+        public int Id { get; set; }
+        public string Name { get; set; } = null!;
     }
 }

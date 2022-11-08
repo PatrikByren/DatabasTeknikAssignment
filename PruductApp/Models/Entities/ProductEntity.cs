@@ -14,8 +14,7 @@ namespace PruductApp.Models.Entities
         public string Name { get; set; } = null!;
         [Column(TypeName = "money")]
         public decimal Price { get; set; }
-        public int OrderId { get; set; }
-        public OrderEntity Order { get; set; } = null!;
+        public ICollection<OrderEntity> Order { get; set; } = new List<OrderEntity>();
 
     }
 }

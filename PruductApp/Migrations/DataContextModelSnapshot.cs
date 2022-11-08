@@ -22,6 +22,21 @@ namespace PruductApp.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("OrderEntityProductEntity", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderEntityProductEntity");
+                });
+
             modelBuilder.Entity("PruductApp.Models.Entities.CustomerEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -34,12 +49,9 @@ namespace PruductApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Customers", (string)null);
+                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("PruductApp.Models.Entities.OrderEntity", b =>
@@ -63,7 +75,7 @@ namespace PruductApp.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("PruductApp.Models.Entities.ProductEntity", b =>
@@ -78,17 +90,27 @@ namespace PruductApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("money");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId");
+                    b.ToTable("Products");
+                });
 
-                    b.ToTable("Products", (string)null);
+            modelBuilder.Entity("OrderEntityProductEntity", b =>
+                {
+                    b.HasOne("PruductApp.Models.Entities.OrderEntity", null)
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PruductApp.Models.Entities.ProductEntity", null)
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PruductApp.Models.Entities.OrderEntity", b =>
@@ -102,25 +124,9 @@ namespace PruductApp.Migrations
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("PruductApp.Models.Entities.ProductEntity", b =>
-                {
-                    b.HasOne("PruductApp.Models.Entities.OrderEntity", "Order")
-                        .WithMany("Products")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-                });
-
             modelBuilder.Entity("PruductApp.Models.Entities.CustomerEntity", b =>
                 {
                     b.Navigation("Order");
-                });
-
-            modelBuilder.Entity("PruductApp.Models.Entities.OrderEntity", b =>
-                {
-                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

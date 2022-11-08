@@ -12,9 +12,7 @@ namespace PruductApp.Models.Entities
         public int Id { get; set; }
         [Column(TypeName = "nvarchar(200)")]
         public string Name { get; set; } = null!;
-        [ForeignKey("OrderEntity")]
-        public int OrderId { get; set; }
-        public ICollection<OrderEntity> Order { get; set; } = null!;
+        public ICollection<OrderEntity> Order { get; set; } = new List<OrderEntity>();
 
     }
 }

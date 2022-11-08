@@ -12,8 +12,8 @@ using PruductApp.Data;
 namespace PruductApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221105124053_test2")]
-    partial class test2
+    [Migration("20221108141110_initGo")]
+    partial class initGo
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -62,6 +62,8 @@ namespace PruductApp.Migrations
 
                     b.HasIndex("CustomerId");
 
+                    b.HasIndex("ProductId");
+
                     b.ToTable("Orders");
                 });
 
@@ -77,15 +79,10 @@ namespace PruductApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("money");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
 
                     b.ToTable("Products");
                 });
@@ -93,28 +90,30 @@ namespace PruductApp.Migrations
             modelBuilder.Entity("PruductApp.Models.Entities.OrderEntity", b =>
                 {
                     b.HasOne("PruductApp.Models.Entities.CustomerEntity", "Customer")
-                        .WithMany()
+                        .WithMany("Order")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("PruductApp.Models.Entities.ProductEntity", "Product")
+                        .WithMany("Order")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Customer");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("PruductApp.Models.Entities.CustomerEntity", b =>
+                {
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("PruductApp.Models.Entities.ProductEntity", b =>
                 {
-                    b.HasOne("PruductApp.Models.Entities.OrderEntity", "Order")
-                        .WithMany("Products")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Order");
-                });
-
-            modelBuilder.Entity("PruductApp.Models.Entities.OrderEntity", b =>
-                {
-                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

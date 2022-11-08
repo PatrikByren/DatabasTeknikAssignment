@@ -13,6 +13,12 @@ namespace PruductApp.Services
     internal class OrderService
     {
         public readonly DataContext _context;
+
+        public OrderService(DataContext context)
+        {
+            _context = context;
+        }
+
         public async Task CreateOrderAsync()
         {
             _context.Add(new OrderRequest { });

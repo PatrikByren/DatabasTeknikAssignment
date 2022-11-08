@@ -8,7 +8,12 @@
         Title="ProductApp" Height="500" Width="500">
     <Grid>
         <StackPanel Margin="50">
-            <ComboBox Name="Products"/>
+            <Button x:Name="btn_CreateNewCostumer" Content="New costumer" Margin="20"/>
+            <Button x:Name="btn_CreateNewProduct" Content="New Product" Margin="20"/>
+            <ComboBox Name="Products" Margin="20"/>
+            <Button x:Name="btn_AddProductToChart" Content="Add to chart" Margin="20"/>
+            <ComboBox Name="Customer" DisplayMemberPath="Key" Margin="20"/>
+            <Button x:Name="btn_MakeOrder" Content="CompleteOrder" Margin="20"/>
         </StackPanel>
         
     </Grid>

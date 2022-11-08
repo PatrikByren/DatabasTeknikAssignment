@@ -12,8 +12,8 @@ using PruductApp.Data;
 namespace PruductApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221105091746_test")]
-    partial class test
+    [Migration("20221108134833_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,21 @@ namespace PruductApp.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("OrderEntityProductEntity", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderEntityProductEntity");
+                });
 
             modelBuilder.Entity("PruductApp.Models.Entities.CustomerEntity", b =>
                 {
@@ -35,6 +50,9 @@ namespace PruductApp.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -49,6 +67,9 @@ namespace PruductApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
 
@@ -56,6 +77,8 @@ namespace PruductApp.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("Orders");
                 });
@@ -80,25 +103,38 @@ namespace PruductApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId");
-
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("PruductApp.Models.Entities.ProductEntity", b =>
+            modelBuilder.Entity("OrderEntityProductEntity", b =>
                 {
-                    b.HasOne("PruductApp.Models.Entities.OrderEntity", "Order")
-                        .WithMany("Products")
+                    b.HasOne("PruductApp.Models.Entities.OrderEntity", null)
+                        .WithMany()
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Order");
+                    b.HasOne("PruductApp.Models.Entities.ProductEntity", null)
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PruductApp.Models.Entities.OrderEntity", b =>
                 {
-                    b.Navigation("Products");
+                    b.HasOne("PruductApp.Models.Entities.CustomerEntity", "Customer")
+                        .WithMany("Order")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("PruductApp.Models.Entities.CustomerEntity", b =>
+                {
+                    b.Navigation("Order");
                 });
 #pragma warning restore 612, 618
         }

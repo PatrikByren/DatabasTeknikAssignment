@@ -13,9 +13,9 @@ namespace PruductApp.Models.Entities
         public DateTime DateTime { get; set; } = DateTime.Now;
         public int CustomerId { get; set; }
         public int ProductId { get; set; }
-        public ICollection<ProductEntity> Product { get; set; } = null!;//Kopplad till flera produkter
+        public ICollection<ProductEntity> Product { get; set; } = new List<ProductEntity>();
         public CustomerEntity Customer { get; set; } = null!;
 
 
-    }
+}
 }
