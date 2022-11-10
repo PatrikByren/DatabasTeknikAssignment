@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PruductApp.Models
 {
-    internal class CustomerRequest
+    public class CustomerRequest
     {
         public string Name { get; set; } = null!;
     }

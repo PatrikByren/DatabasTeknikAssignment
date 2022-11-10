@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace PruductApp.Services
 {
-    internal class CustomerService
+    public class CustomerService
     {
         private readonly DataContext _context;
         public CustomerService(DataContext context)
@@ -64,7 +64,6 @@ namespace PruductApp.Services
                 var customerEntity = await _context.Customers.FindAsync(id);
                 if (customerEntity != null)
                 {
-                    //customerEntity.Customers = customersModel.Customers;
                     customerEntity.Name = customersModel.Name;
                     _context.Entry(customerEntity).State = EntityState.Modified;
                     await _context.SaveChangesAsync();

@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PruductApp.Data;
 using PruductApp.Models;
 using PruductApp.Models.Entities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,18 +20,45 @@ namespace PruductApp.Services
         {
             _context = context;
         }
-        public async Task CreateProductAsync(ProductRequest req)
+        public async Task<ActionResult> CreateProductAsync(ProductRequest req)
         {
-            _context.Add(new ProductEntity
+            try
             {
-                Name = req.Name,
-                Price = req.Price,
-            });
-            await _context.SaveChangesAsync();
+                var productEntity = new ProductEntity()
+                {
+                    Name = req.Name
+                };
+
+                _context.Products.Add(productEntity);
+                await _context.SaveChangesAsync();
+
+                return new OkObjectResult(new ProductModel
+                {
+                    Id = productEntity.Id,
+                    Name = productEntity.Name,
+                    Price = productEntity.Price
+                });
+            }
+            catch (Exception ex) { Debug.WriteLine(ex.Message); }
+            return new BadRequestResult();
         }
-        public async Task<List<ProductEntity>> GetAllProductAsync()
+        public async Task<List<ProductModel>> GetAllProductAsync()
         {
-            return await _context.Products.ToListAsync();
+            var productModel = new List<ProductModel>();
+
+            try
+            {
+                foreach (var item in await _context.Products.ToListAsync())
+                    productModel.Add(new ProductModel
+                    {
+                        Id = item.Id,
+                        Name = item.Name,
+                    });
+
+                return productModel;
+            }
+            catch (Exception ex) { Debug.WriteLine(ex.Message); }
+            return productModel;
         }
         public async Task<ProductEntity> GetOneProductAsync(int id) 
         {

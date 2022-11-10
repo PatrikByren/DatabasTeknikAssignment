@@ -7,13 +7,19 @@
         mc:Ignorable="d"
         Title="ProductApp" Height="500" Width="500">
     <Grid>
-        <StackPanel Margin="50">
-            <Button x:Name="btn_CreateNewCostumer" Content="New costumer" Margin="20"/>
-            <Button x:Name="btn_CreateNewProduct" Content="New Product" Margin="20"/>
-            <ComboBox Name="Products" Margin="20"/>
-            <Button x:Name="btn_AddProductToChart" Content="Add to chart" Margin="20"/>
-            <ComboBox Name="Customer" DisplayMemberPath="Key" Margin="20"/>
-            <Button x:Name="btn_MakeOrder" Content="CompleteOrder" Margin="20"/>
+        <StackPanel Margin="50 20">
+            <TextBlock Text="New customer" Margin="20 0"/>
+            <TextBox x:Name="tb_customerName" Margin="20 0 20 0"/>
+            <Button x:Name="btn_createNewCostumer" Content="New costumer" Margin="20 10"/>
+            <TextBlock Text="New product" Margin="20 0"/>
+            <TextBox x:Name="tb_productName" Margin="20 0 20 0"/>
+            <TextBlock Text="Price" Margin="20 0"/>
+            <TextBox x:Name="tb_productPrice" Margin="20 0 20 0"/>
+            <Button x:Name="btn_createNewProduct" Content="New Product" Margin="20 10"/>
+            <ComboBox Name="cb_product" DisplayMemberPath="Value" Margin="20"/>
+            <Button x:Name="btn_addProductToChart" Content="Add to chart" Margin="20"/>
+            <ComboBox Name="cb_customer" DisplayMemberPath="Value" Margin="20"/>
+            <Button x:Name="btn_makeOrder" Content="Make Order" Margin="20" Click="btn_makeOrder_Click"/>
         </StackPanel>
         
     </Grid>

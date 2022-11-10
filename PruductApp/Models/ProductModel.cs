@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace PruductApp.Models
 {
-    public class OrderRequest
+    public class ProductModel
     {
-        public int CustomerId { get; set; } 
-        public int ProductId { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; } = null!;
+        public decimal Price { get; set; }
     }
 }

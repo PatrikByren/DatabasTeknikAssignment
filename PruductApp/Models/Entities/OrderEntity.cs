@@ -9,11 +9,11 @@ namespace PruductApp.Models.Entities
 {
     public class OrderEntity
     {
-        public int Id { get; set; } 
-        public DateTime DateTime { get; set; } = DateTime.Now;
+        public int Id { get; set; }
+        public DateTime Date { get; set; } 
         public int CustomerId { get; set; }
-        public int ProductId { get; set; }
-        public ICollection<ProductEntity> Product { get; set; } = new List<ProductEntity>();
+        public int OrderRowsId { get; set; }
+        public IEnumerable<OrderRowsEntity> OrderRows { get; set; } = new List<OrderRowsEntity>();
         public CustomerEntity Customer { get; set; } = null!;
 
 

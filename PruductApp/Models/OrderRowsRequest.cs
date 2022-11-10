@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace PruductApp.Models
 {
-    public class OrderRequest
+    public class OrderRowsRequest
     {
-        public int CustomerId { get; set; } 
+        public int Id { get; set; }
+        public int OrderId { get; set; }
         public int ProductId { get; set; }
     }
 }

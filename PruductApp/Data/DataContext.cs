@@ -16,6 +16,7 @@ namespace PruductApp.Data
         public DbSet<ProductEntity> Products { get; set; }
         public DbSet<OrderEntity> Orders { get; set; }
         public DbSet<CustomerEntity> Customers { get; set; }
+        public DbSet<OrderRowsEntity> OrderRows { get; set; }
     }
 }
  

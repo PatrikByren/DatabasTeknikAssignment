@@ -1,16 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PruductApp.Data;
 using PruductApp.Models;
 using PruductApp.Models.Entities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace PruductApp.Services
 {
-    internal class OrderService
+    public class OrderService
     {
         public readonly DataContext _context;
 
@@ -18,11 +21,25 @@ namespace PruductApp.Services
         {
             _context = context;
         }
-
-        public async Task CreateOrderAsync()
+        public async Task<ActionResult> CreateOrderAsync(OrderRequest orderReq)
         {
-            _context.Add(new OrderRequest { });
-            await _context.SaveChangesAsync();
+            try
+            {
+                var orderEntity = new OrderEntity
+                {
+                    Date = DateTime.Now,
+                    CustomerId = orderReq.CustomerId,
+                };
+
+                orderEntity.OrderRowsId = new OrderRowsEntity { ProductId = orderReq.ProductId }.Id;
+                _context.Orders.Add(orderEntity);
+                await _context.SaveChangesAsync();
+                MessageBox.Show("Saved!");
+                return new OkResult();
+            }
+            catch (Exception ex) { Debug.WriteLine(ex.Message); }
+            return new BadRequestResult();
+
         }
         public async Task <List<OrderEntity>>GetAllOrderAsync()
         {

@@ -25,7 +25,9 @@ namespace PruductApp
             {
                 services.AddScoped<MainWindow>();
                 services.AddDbContext<DataContext>(x => x.UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\patri\Skola\DatabasTeknik\DatabasTeknikAssignment\PruductApp\Data\assignment_sql_db.mdf;Integrated Security=True;Connect Timeout=30"));
+                services.AddScoped<CustomerService>();
                 services.AddScoped<ProductService>();
+                services.AddScoped<OrderService>();
             }).Build();
         }
         protected override async void OnStartup(StartupEventArgs e)
