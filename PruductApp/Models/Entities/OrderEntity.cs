@@ -12,10 +12,7 @@ namespace PruductApp.Models.Entities
         public int Id { get; set; }
         public DateTime Date { get; set; } 
         public int CustomerId { get; set; }
-        public int OrderRowsId { get; set; }
         public IEnumerable<OrderRowsEntity> OrderRows { get; set; } = new List<OrderRowsEntity>();
-        public CustomerEntity Customer { get; set; } = null!;
-
-
-}
+        public CustomerEntity Customer { get; set; }
+    }
 }

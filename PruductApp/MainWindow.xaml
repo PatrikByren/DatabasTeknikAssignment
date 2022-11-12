@@ -8,19 +8,39 @@
         Title="ProductApp" Height="500" Width="500">
     <Grid>
         <StackPanel Margin="50 20">
-            <TextBlock Text="New customer" Margin="20 0"/>
-            <TextBox x:Name="tb_customerName" Margin="20 0 20 0"/>
-            <Button x:Name="btn_createNewCostumer" Content="New costumer" Margin="20 10"/>
-            <TextBlock Text="New product" Margin="20 0"/>
+            <TextBlock Text="Name of new customer" Margin="20 0"/>
+            <TextBox  x:Name="tb_customerName" Margin="20 0 20 0"/>
+            <Button x:Name="btn_createNewCostumer" Click="btn_createNewCostumer_Click" Content="Create costumer" Margin="20 10"/>
+            <TextBlock Text="Name of new product" Margin="20 0"/>
             <TextBox x:Name="tb_productName" Margin="20 0 20 0"/>
-            <TextBlock Text="Price" Margin="20 0"/>
+            <TextBlock Text="Price of the new product" Margin="20 0"/>
             <TextBox x:Name="tb_productPrice" Margin="20 0 20 0"/>
-            <Button x:Name="btn_createNewProduct" Content="New Product" Margin="20 10"/>
-            <ComboBox Name="cb_product" DisplayMemberPath="Value" Margin="20"/>
-            <Button x:Name="btn_addProductToChart" Content="Add to chart" Margin="20"/>
-            <ComboBox Name="cb_customer" DisplayMemberPath="Value" Margin="20"/>
-            <Button x:Name="btn_makeOrder" Content="Make Order" Margin="20" Click="btn_makeOrder_Click"/>
+            <Button x:Name="btn_createNewProduct" Click="btn_createNewProduct_Click" Content="Create Product" Margin="20 10"/>
+            <TextBlock Text="Products" Margin="20 0"/>
+            <ComboBox Name="cb_product" DisplayMemberPath="Value" Margin="20 0 20 10"/>
+            <Button x:Name="btn_addProductToChart" Content="Add to chart" Margin="20 10" Click="btn_addProductToChart_Click"/>
+            <TextBlock Text="Chart:" Margin="20 0"/>
+            <ListView x:Name="lvProducts" MinHeight="20" MaxHeight="40" HorizontalContentAlignment="Stretch" Margin="20 0 20 10">
+            <ListView.ItemTemplate>
+                <DataTemplate >
+                    <Grid  >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Name}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+                            <Button x:Name="btnDelete" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Right" Content="&#xE74D;" />
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            </ListView>
+            <TextBlock Text="Customers" Margin="20 0"/>
+            <ComboBox Name="cb_customer" DisplayMemberPath="Value" Margin="20 0 20 10"/>
+            <Button x:Name="btn_makeOrder" Content="Make Order" Margin="20 10" Click="btn_makeOrder_Click"/>
         </StackPanel>
-        
     </Grid>
 </Window>

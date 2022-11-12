@@ -26,13 +26,14 @@ namespace PruductApp.Services
             {
                 var productEntity = new ProductEntity()
                 {
-                    Name = req.Name
+                    Name = req.Name,
+                    Price = req.Price
                 };
 
                 _context.Products.Add(productEntity);
                 await _context.SaveChangesAsync();
 
-                return new OkObjectResult(new ProductModel
+                return new OkObjectResult(new ProductEntity //Ändrad från Model
                 {
                     Id = productEntity.Id,
                     Name = productEntity.Name,
