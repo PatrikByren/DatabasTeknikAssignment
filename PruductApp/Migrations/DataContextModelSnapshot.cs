@@ -36,7 +36,7 @@ namespace PruductApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customers", (string)null);
                 });
 
             modelBuilder.Entity("PruductApp.Models.Entities.OrderEntity", b =>
@@ -57,16 +57,14 @@ namespace PruductApp.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("PruductApp.Models.Entities.OrderRowsEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
@@ -76,12 +74,11 @@ namespace PruductApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId")
-                        .IsUnique();
+                    b.HasIndex("OrderId");
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderRows");
+                    b.ToTable("OrderRows", (string)null);
                 });
 
             modelBuilder.Entity("PruductApp.Models.Entities.ProductEntity", b =>
@@ -101,7 +98,7 @@ namespace PruductApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("PruductApp.Models.Entities.OrderEntity", b =>
@@ -118,8 +115,8 @@ namespace PruductApp.Migrations
             modelBuilder.Entity("PruductApp.Models.Entities.OrderRowsEntity", b =>
                 {
                     b.HasOne("PruductApp.Models.Entities.OrderEntity", "Order")
-                        .WithOne("OrderRows")
-                        .HasForeignKey("PruductApp.Models.Entities.OrderRowsEntity", "OrderId")
+                        .WithMany("OrderRows")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -141,8 +138,7 @@ namespace PruductApp.Migrations
 
             modelBuilder.Entity("PruductApp.Models.Entities.OrderEntity", b =>
                 {
-                    b.Navigation("OrderRows")
-                        .IsRequired();
+                    b.Navigation("OrderRows");
                 });
 
             modelBuilder.Entity("PruductApp.Models.Entities.ProductEntity", b =>

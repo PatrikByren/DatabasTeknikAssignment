@@ -9,5 +9,6 @@ namespace PruductApp.Models
     public class OrderRowsRequest
     {
         public int ProductId { get; set; }
+        public int OrderId { get; set; }
     }
 }

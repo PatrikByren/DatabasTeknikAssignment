@@ -24,7 +24,7 @@ namespace PruductApp
             app = Host.CreateDefaultBuilder().ConfigureServices(services =>
             {
                 services.AddScoped<MainWindow>();
-                services.AddDbContext<DataContext>(x => x.UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\patri\Skola\DatabasTeknik\DatabasTeknikAssignment\PruductApp\Data\assignment_sql_db.mdf;Integrated Security=True;Connect Timeout=30"));
+                services.AddDbContext<DataContext>(x => x.UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\patri\Skola\DatabasTeknik\DatabasTeknikAssignment\PruductApp\Data\assigment_sql_db.mdf;Integrated Security=True;Connect Timeout=30"));
                 services.AddScoped<CustomerService>();
                 services.AddScoped<ProductService>();
                 services.AddScoped<OrderService>();

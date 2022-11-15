@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using PruductApp.Data;
 using PruductApp.Models;
 using PruductApp.Models.Entities;
@@ -17,15 +18,17 @@ namespace PruductApp.Services
     public class OrderService
     {
         public readonly DataContext _context;
+        //private ObservableCollection<OrderRowsEntity> _orderRowsEntity = new();
+        private int orderRowsId;
         public OrderService(DataContext context)
         {
             _context = context;
         }
         public async Task<ActionResult> CreateOrderAsync(OrderRequest orderReq, ObservableCollection<ProductModel> productModels)
         {
+            
             try
             {
-                //var orderRowsRequest = new OrderRowsRequest { ProductId = orderReq.ProductId };
                 var orderEntity = new OrderEntity
                 {
                     Date = DateTime.Now,
@@ -34,30 +37,36 @@ namespace PruductApp.Services
 
                 _context.Orders.Add(orderEntity);
                 await _context.SaveChangesAsync();
-                var products = productModels.ToList();
-                foreach (var item in products)
-                { 
-                    var orderRowsEntity = new OrderRowsEntity
-                    {
-                    OrderId = orderEntity.Id,
-                    ProductId = item.Id
-                    };
-                    _context.OrderRows.Add(orderRowsEntity);
-                    //_context.Entry(orderRowsEntity).State =EntityState.Added;
-                    await _context.SaveChangesAsync();
-                    //_context.Entry(item).State = EntityState.Added;
-
-
-                }        
-                MessageBox.Show("try to save");
-                //await _context.SaveChangesAsync();
+                
+                foreach (var item in productModels)
+                {
+                    OrderRowsEntity orderRowsEntity = new OrderRowsEntity();
+                        orderRowsEntity.ProductId = item.Id;
+                        orderRowsEntity.OrderId = orderEntity.Id;
+                        await _context.OrderRows.AddAsync(orderRowsEntity);
+                        await _context.SaveChangesAsync();
+                }
                 MessageBox.Show("Saved!");
                 return new OkResult();
             }
             catch (Exception ex) { Debug.WriteLine(ex.Message); }
+            MessageBox.Show("Fail to save!");
             return new BadRequestResult();
 
         }
+        //private async Task<ActionResult> SaveOrderRows(OrderRowsEntity orderRowsEntity)
+        //{
+        //    try
+        //    {
+        //        _context.OrderRows.Add(orderRowsEntity);
+        //        await _context.SaveChangesAsync();
+        //        return new OkResult();
+        //    }
+        //    catch (Exception ex) { Debug.WriteLine(ex.Message); }
+        //    return new BadRequestResult();
+
+
+        //}
         //public async Task<ActionResult> CreateOrderAsync(OrderRequest orderReq)
         //{
         //    try

@@ -26,7 +26,7 @@ namespace PruductApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        internal ObservableCollection<ProductModel> _productModel = new();
+        private ObservableCollection<ProductModel> _productModel = new();
         private readonly CustomerService _customerService;
         private readonly ProductService _productService;
         private readonly OrderService _orderService;

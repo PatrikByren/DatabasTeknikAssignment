@@ -14,7 +14,7 @@ namespace PruductApp.Models.Entities
         public string Name { get; set; } = null!;
         [Column(TypeName = "money")]
         public decimal Price { get; set; }
-        public IEnumerable<OrderRowsEntity> OrderRows { get; set; } = new List<OrderRowsEntity>();  
+        public ICollection<OrderRowsEntity> OrderRows { get; set; } = new List<OrderRowsEntity>();
 
     }
 }

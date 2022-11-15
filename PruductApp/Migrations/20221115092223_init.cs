@@ -15,8 +15,7 @@ namespace PruductApp.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(200)", nullable: false),
-                    OrderId = table.Column<int>(type: "int", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(200)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -30,8 +29,7 @@ namespace PruductApp.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(200)", nullable: false),
-                    Price = table.Column<decimal>(type: "money", nullable: false),
-                    OrderId = table.Column<int>(type: "int", nullable: false)
+                    Price = table.Column<decimal>(type: "money", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -44,9 +42,8 @@ namespace PruductApp.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CustomerId = table.Column<int>(type: "int", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: false)
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CustomerId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -60,23 +57,24 @@ namespace PruductApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderEntityProductEntity",
+                name: "OrderRows",
                 columns: table => new
                 {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     OrderId = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderEntityProductEntity", x => new { x.OrderId, x.ProductId });
+                    table.PrimaryKey("PK_OrderRows", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OrderEntityProductEntity_Orders_OrderId",
+                        name: "FK_OrderRows_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrderEntityProductEntity_Products_ProductId",
+                        name: "FK_OrderRows_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
@@ -84,8 +82,13 @@ namespace PruductApp.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderEntityProductEntity_ProductId",
-                table: "OrderEntityProductEntity",
+                name: "IX_OrderRows_OrderId",
+                table: "OrderRows",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderRows_ProductId",
+                table: "OrderRows",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
@@ -97,7 +100,7 @@ namespace PruductApp.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "OrderEntityProductEntity");
+                name: "OrderRows");
 
             migrationBuilder.DropTable(
                 name: "Orders");
